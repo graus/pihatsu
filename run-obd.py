@@ -1,22 +1,30 @@
 import datetime
 import time
 import obd
+from serial import SerialException
 
 obd.logger.setLevel(obd.logging.DEBUG)
 
 
 def connect_obd():
     """
-    Try to establish connection w/ OBD2 with 10 sec re-try intervals
+    Establish connection w/ OBD2 with 10 sec re-try intervals
     """
 
     while True:
-        conn = obd.OBD(portstr="/dev/rfcomm0", baudrate=None, fast=False)
+        try:
+            conn = obd.OBD(portstr="/dev/rfcomm0", baudrate=None, fast=False)
+        except SerialException:
+            time.sleep(10)
+            continue
+
         if conn.is_connected():
             return conn
+
         else:
             obd.logger.debug("Unable to connect, trying again in 10...")
             time.sleep(10)
+
 
 
 def get_timestamp():
@@ -57,7 +65,7 @@ def main(conn, commands):
 
 
 if __name__ == "__main__":
-    cmds = ['FUEL_STATUS', 'ENGINE_LOAD', 'COOLANT_TEMP', 'SHORT_FUEL_TRIM_1', 'LONG_FUEL_TRIM_1',  'INTAKE_PRESSURE', 
+    cmds = ['FUEL_STATUS', 'ENGINE_LOAD', 'COOLANT_TEMP', 'SHORT_FUEL_TRIM_1', 'LONG_FUEL_TRIM_1',  'INTAKE_PRESSURE',
             'RPM', 'SPEED', 'TIMING_ADVANCE', 'INTAKE_TEMP', 'THROTTLE_POS', 'O2_B1S1', 'O2_B1S2']
     cmds = [c for c in obd.commands[1] if c.name in cmds]
 
