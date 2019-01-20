@@ -1,5 +1,3 @@
-import sys
-import datetime
 import obd
 
 obd.logger.setLevel(obd.logging.DEBUG)
@@ -13,4 +11,3 @@ with open('/home/graus/all-commands.csv', 'a') as csv_file:
         csv_file.flush()
 
 conn.close()
-
