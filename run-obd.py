@@ -26,7 +26,6 @@ def connect_obd():
             time.sleep(10)
 
 
-
 def get_timestamp():
     return datetime.datetime.now().replace(microsecond=0).isoformat()
 
@@ -65,8 +64,8 @@ def main(conn, commands):
 
 
 if __name__ == "__main__":
-    cmds = ['FUEL_STATUS', 'ENGINE_LOAD', 'COOLANT_TEMP', 'SHORT_FUEL_TRIM_1', 'LONG_FUEL_TRIM_1',  'INTAKE_PRESSURE',
-            'RPM', 'SPEED', 'TIMING_ADVANCE', 'INTAKE_TEMP', 'THROTTLE_POS', 'O2_B1S1', 'O2_B1S2']
+    cmds = ['RPM', 'SPEED', 'ENGINE_LOAD', 'COOLANT_TEMP', 'FUEL_STATUS', 'SHORT_FUEL_TRIM_1', 'LONG_FUEL_TRIM_1',
+            'INTAKE_PRESSURE', 'TIMING_ADVANCE', 'INTAKE_TEMP', 'THROTTLE_POS', 'O2_B1S1', 'O2_B1S2']
     cmds = [c for c in obd.commands[1] if c.name in cmds]
 
     while True:
