@@ -57,11 +57,10 @@ def main(conn, commands):
 
 
 if __name__ == "__main__":
-    cmds = {b'0103', b'0104', b'0105', b'0106', b'0107', b'010B', b'010C', b'010D', b'010E', b'010F', b'0111', b'0113',
-            b'0114', b'0115'}  # extracted from logs
-    cmds = [c for c in obd.commands[1] if c.command in cmds]
+    cmds = ['FUEL_STATUS', 'ENGINE_LOAD', 'COOLANT_TEMP', 'SHORT_FUEL_TRIM_1', 'LONG_FUEL_TRIM_1',  'INTAKE_PRESSURE', 
+            'RPM', 'SPEED', 'TIMING_ADVANCE', 'INTAKE_TEMP', 'THROTTLE_POS', 'O2_B1S1', 'O2_B1S2']
+    cmds = [c for c in obd.commands[1] if c.name in cmds]
 
     while True:
         conn = connect_obd()
-        force_push_commands(conn, '/home/graus/obd-all-commands.tsv')  # one-off function to check commands
         main(conn, cmds)
